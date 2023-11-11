@@ -1,4 +1,4 @@
-nomeSistema,class,decor,organic,jspitir
+nomeSistema,class,designite,organic,jspitir
 corenlp,edu.stanford.nlp.ie.machinereading.BasicRelationFeatureFactory,0,1,1
 corenlp,edu.stanford.nlp.ie.machinereading.domains.ace.reader.AceEntityMention,0,1,1
 corenlp,edu.stanford.nlp.ling.tokensregex.ComplexNodePattern,0,1,1
