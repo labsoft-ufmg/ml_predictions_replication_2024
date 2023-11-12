@@ -10,13 +10,13 @@
 
 <script>
 
-  function scatterplot(csv, s_axis, f_axis){
+  function scatterplot(csv, s_axis, f_axis, title_graph){
     // Tamanho do gráfico
     const width = 500;
     const height = 300;
 
     // Margens
-    const margin = { top: 20, right: 60, bottom: 30, left: 50 };
+    const margin = { top: 20, right: 60, bottom: 50, left: 50 };
 
     // Criando o elemento SVG
     const svg = d3.select("body")
@@ -104,13 +104,20 @@
 
       svg.append("g")
         .call(d3.axisLeft(yScaleGC));
+
+      svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + margin.top + margin.bottom - 25)
+        .style("text-anchor", "middle")
+        .text(title_graph);
     });
   }
 
-  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/f1_undersample.csv",0,1);
-  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/f1_oversample.csv",0,1);
-  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/auc_undersample.csv",0.5,1);
-  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/auc_oversample.csv",0.5,1);
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/f1_oversample.csv",0,1, "F1 Oversample");
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/f1_undersample.csv",0,1, "F1 Undersample");
+
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/auc_oversample.csv",0.5,1, "AUC Oversample");
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/auc_undersample.csv",0.5,1,"AUC undersample");
 </script>
 
 </body>
