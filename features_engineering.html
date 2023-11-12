@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scatterplot D3.js</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+
+<script>
+
+  function scatterplot(csv, s_axis, f_axis, title_graph){
+    // Tamanho do gráfico
+    const width = 500;
+    const height = 300;
+
+    // Margens
+    const margin = { top: 20, right: 60, bottom: 50, left: 50 };
+
+    // Criando o elemento SVG
+    const svg = d3.select("body")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    // Carregando dados do arquivo CSV
+    d3.csv(csv).then(function(data) {
+      // Escalas
+      const xScale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => +d.Features)])
+        //.range([0, width]);
+        .range([margin.left, width + margin.left]);
+
+      const yScaleGC = d3.scaleLinear()
+        .domain([s_axis, f_axis])
+        .range([height, 0]);
+
+      const yScaleRB = d3.scaleLinear()
+        .domain([s_axis, f_axis])
+        .range([height, 0]);
+
+      const yScaleFE = d3.scaleLinear()
+        .domain([s_axis, f_axis])
+        .range([height, 0]);
+
+      const yScaleLM = d3.scaleLinear()
+        .domain([s_axis, f_axis])
+        .range([height, 0]);
+
+      // Criando círculos ocos para o scatterplot (GC)
+      svg.selectAll("circle.gc")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("class", "gc")
+        .attr("cx", d => xScale(+d.Features))
+        .attr("cy", d => yScaleGC(+d.GC))
+        .attr("r", 5)
+        .style("fill", "none")
+        .style("stroke", "black");
+
+      // Criando triângulos ocos para RB
+      svg.selectAll("path.rb")
+        .data(data)
+        .enter()
+        .append("path")
+        .attr("class", "rb")
+        .attr("transform", d => `translate(${xScale(+d.Features)}, ${yScaleRB(+d.RB)})`)
+        .attr("d", d3.symbol().type(d3.symbolTriangle).size(50))
+        .style("fill", "none")
+        .style("stroke", "red");
+
+      // Criando quadrados ocos para FE
+      svg.selectAll("rect.fe")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class", "fe")
+        .attr("x", d => xScale(+d.Features) - 5)
+        .attr("y", d => yScaleFE(+d.FE) - 5)
+        .attr("width", 10)
+        .attr("height", 10)
+        .style("fill", "none")
+        .style("stroke", "blue");
+
+      // Criando estrelas ocas para LM
+      svg.selectAll("path.lm")
+        .data(data)
+        .enter()
+        .append("path")
+        .attr("class", "lm")
+        .attr("transform", d => `translate(${xScale(+d.Features)}, ${yScaleLM(+d.LM)})`)
+        .attr("d", d3.symbol().type(d3.symbolCross).size(50))
+        .style("fill", "none")
+        .style("stroke", "green");
+
+      // Adicionando eixos
+      svg.append("g")
+        .attr("transform", `translate(0, ${height})`)
+        .call(d3.axisBottom(xScale));
+
+      svg.append("g")
+        .call(d3.axisLeft(yScaleGC));
+
+      svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + margin.top + margin.bottom - 25)
+        .style("text-anchor", "middle")
+        .text(title_graph);
+    });
+  }
+
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/f1_fv.csv",0,1, "F1 K Features Variation");
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/f1_fv_pf.csv",0,1, "F1 K Features Variation + Polynomial Fearures");
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/auc_fv.csv",0.5,1, "AUC K Features Variation");
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/auc_fv_pf.csv",0.5,1, "AUC K Features Variation + Polynomial Fearures");
+</script>
+
+</body>
+</html>
