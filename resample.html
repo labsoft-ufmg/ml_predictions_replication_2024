@@ -10,7 +10,7 @@
 
 <script>
 
-  function scatterplot(csv){
+  function scatterplot(csv, s_range){
     // Tamanho do gráfico
     const width = 500;
     const height = 300;
@@ -34,19 +34,19 @@
         .range([0, width]);
 
       const yScaleGC = d3.scaleLinear()
-        .domain([0, 1])
+        .domain([s_range, 1])
         .range([height, 0]);
 
       const yScaleRB = d3.scaleLinear()
-        .domain([0, 1])
+        .domain([s_range, 1])
         .range([height, 0]);
 
       const yScaleFE = d3.scaleLinear()
-        .domain([0, 1])
+        .domain([s_range, 1])
         .range([height, 0]);
 
       const yScaleLM = d3.scaleLinear()
-        .domain([0, 1])
+        .domain([s_range, 1])
         .range([height, 0]);
 
       // Criando círculos ocos para o scatterplot (GC)
@@ -132,10 +132,10 @@
     });
   }
 
-  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/f1_undersample.csv");
-  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/f1_oversample.csv");
-  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/auc_undersample.csv");
-  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/auc_oversample.csv");
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/f1_undersample.csv",0);
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/f1_oversample.csv",0);
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/auc_undersample.csv",0.5);
+  scatterplot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/auc_oversample.csv",0.5);
 </script>
 
 </body>
