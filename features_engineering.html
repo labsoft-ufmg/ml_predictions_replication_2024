@@ -31,11 +31,12 @@
       // Escalas
       const xScale = d3.scaleLinear()
         .domain([0, d3.max(data, d => +d.Features)])
-        //.range([0, width]);
+        .style("font-size", "12px")
         .range([margin.left, width + margin.left]);
 
       const yScaleGC = d3.scaleLinear()
         .domain([s_axis, f_axis])
+        .style("font-size", "12px")
         .range([height, 0]);
 
       const yScaleRB = d3.scaleLinear()
