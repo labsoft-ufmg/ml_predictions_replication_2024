@@ -31,12 +31,10 @@
       // Escalas
       const xScale = d3.scaleLinear()
         .domain([0, d3.max(data, d => +d.Features)])
-        .style("font-size", "12px")
         .range([margin.left, width + margin.left]);
 
       const yScaleGC = d3.scaleLinear()
         .domain([s_axis, f_axis])
-        .style("font-size", "12px")
         .range([height, 0]);
 
       const yScaleRB = d3.scaleLinear()
@@ -50,6 +48,19 @@
       const yScaleLM = d3.scaleLinear()
         .domain([s_axis, f_axis])
         .range([height, 0]);
+
+      // Adicionando eixos
+      svg.append("g")
+          .attr("transform", `translate(0, ${height})`)
+          .call(d3.axisBottom(xScale))
+          .selectAll("text")
+          .style("font-size", "12px"); // Ajuste o tamanho da fonte conforme necessário
+      
+      svg.append("g")
+          .call(d3.axisLeft(yScaleGC))
+          .selectAll("text")
+          .style("font-size", "12px"); // Ajuste o tamanho da fonte conforme necessário
+
 
       // Criando círculos ocos para o scatterplot (GC)
       svg.selectAll("circle.gc")
